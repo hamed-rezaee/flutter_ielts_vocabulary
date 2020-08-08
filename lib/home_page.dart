@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                     AsyncSnapshot<List<Word>> snapshot) =>
                 ListView.separated(
                   padding: const EdgeInsets.only(bottom: 92),
-                  itemCount: snapshot.data?.length ?? 0,
+                  itemCount: snapshot.data.length ?? 0,
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(height: 1),
                   itemBuilder: (BuildContext context, int index) => Material(
@@ -46,9 +46,13 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       child: ListTile(
                         dense: true,
-                        leading: const CircleAvatar(
-                          maxRadius: 16,
-                          child: Icon(Icons.bubble_chart),
+                        leading: CircleAvatar(
+                          maxRadius: 18,
+                          child: Icon(
+                            snapshot.data[index].checked
+                                ? Icons.assignment_turned_in
+                                : Icons.assignment_late,
+                          ),
                         ),
                         title: Text(
                           snapshot.data[index].word,

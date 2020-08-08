@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_ielts_vocabulary/confirm_dialog.dart';
 import 'package:flutter_ielts_vocabulary/words.dart';
 
-class VocabularyDetail extends StatelessWidget {
+class VocabularyDetail extends StatefulWidget {
   const VocabularyDetail({
     @required this.model,
   });
 
   final Word model;
+
+  @override
+  _VocabularyDetailState createState() => _VocabularyDetailState();
+}
+
+class _VocabularyDetailState extends State<VocabularyDetail> {
+  Word _model;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _model = widget.model;
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -18,16 +33,29 @@ class VocabularyDetail extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () {
-                Provider.of<AppDatabase>(context, listen: false)
-                    .deleteItem(model);
+              onPressed: () async {
+                final bool result = await showAlertDialog(context);
 
-                Navigator.pop(context);
+                if (result) {
+                  await Provider.of<AppDatabase>(context, listen: false)
+                      .deleteItem(_model);
+
+                  Navigator.pop(context);
+                }
               },
             ),
             IconButton(
-              icon: const Icon(Icons.check_box),
-              onPressed: () {},
+              icon: Icon(
+                _model.checked
+                    ? Icons.check_box
+                    : Icons.check_box_outline_blank,
+              ),
+              onPressed: () {
+                Provider.of<AppDatabase>(context, listen: false).updateItem(
+                    _model = _model.copyWith(checked: !_model.checked));
+
+                setState(() {});
+              },
             ),
           ],
         ),
@@ -47,7 +75,7 @@ class VocabularyDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      model.word,
+                      _model.word,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -77,7 +105,7 @@ class VocabularyDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(
-                    model.definitions,
+                    _model.definitions,
                     style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black87,
@@ -97,7 +125,7 @@ class VocabularyDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(
-                    model.synonyms,
+                    _model.synonyms,
                     style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black87,
