@@ -9,7 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'IELTS Vocabulary',
         theme: ThemeData(
-          primarySwatch: Colors.brown,
+          primarySwatch: Colors.blueGrey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: const HomePage(title: 'IELTS Vocabulary'),
