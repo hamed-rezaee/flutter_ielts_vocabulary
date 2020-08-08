@@ -24,7 +24,7 @@ class AppDatabase extends _$AppDatabase {
 
   Stream<List<Word>> watchAll() => select(words).watch();
 
-  Future<int> insertItem(Word word) => into(words).insertOnConflictUpdate(word);
+  Future<int> insertItem(Word word) => into(words).insert(word);
 
   Future<bool> updateItem(Word word) => update(words).replace(word);
 

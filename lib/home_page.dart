@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                     AsyncSnapshot<List<Word>> snapshot) =>
                 ListView.separated(
                   padding: const EdgeInsets.only(bottom: 92),
-                  itemCount: snapshot.data.length ?? 0,
+                  itemCount: snapshot.data?.length ?? 0,
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(height: 1),
                   itemBuilder: (BuildContext context, int index) => Material(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_ielts_vocabulary/confirm_dialog.dart';
@@ -18,11 +19,17 @@ class VocabularyDetail extends StatefulWidget {
 class _VocabularyDetailState extends State<VocabularyDetail> {
   Word _model;
 
+  FlutterTts flutterTts = FlutterTts();
+
+  bool isPlaying = false;
+
   @override
   void initState() {
     super.initState();
 
     _model = widget.model;
+
+    setupTTS();
   }
 
   @override
@@ -63,7 +70,10 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           elevation: 2,
           margin: const EdgeInsets.all(8),
           shape: Border(
-            right: BorderSide(color: Theme.of(context).accentColor, width: 5),
+            right: BorderSide(
+              color: Theme.of(context).accentColor.withOpacity(0.7),
+              width: 5,
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -82,11 +92,22 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                           color: Colors.black87),
                     ),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.volume_up,
-                        color: Colors.black87,
+                        color: isPlaying
+                            ? Theme.of(context).primaryColor.withOpacity(0.3)
+                            : Theme.of(context).primaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: isPlaying
+                          ? null
+                          : () async {
+                              final int result =
+                                  await flutterTts.speak(_model.word);
+
+                              if (result == 1) {
+                                setState(() => isPlaying = true);
+                              }
+                            },
                     )
                   ],
                 ),
@@ -137,4 +158,14 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           ),
         ),
       );
+
+  Future<void> setupTTS() async {
+    flutterTts.setCompletionHandler(() {
+      setState(() => isPlaying = false);
+    });
+
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(0.9);
+  }
 }
