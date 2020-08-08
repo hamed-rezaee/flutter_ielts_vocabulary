@@ -1,6 +1,6 @@
-# flutter_ielts_vocabulary
+# Flutter IELTS Vocabulary
 
-A new Flutter project.
+IELTS Vocabulary Project.
 
 ## Getting Started
 
