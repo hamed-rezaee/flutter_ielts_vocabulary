@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ielts_vocabulary/vocabulary_model.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_ielts_vocabulary/words.dart';
 
 class AddNewWord extends StatefulWidget {
-  const AddNewWord({Key key}) : super(key: key);
-
   @override
   _AddNewWordState createState() => _AddNewWordState();
 }
 
 class _AddNewWordState extends State<AddNewWord> {
-  final GlobalKey _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  VocabularyModel model = VocabularyModel();
+  Word model = Word(checked: false);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -21,7 +21,14 @@ class _AddNewWordState extends State<AddNewWord> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save),
-              onPressed: () {},
+              onPressed: () {
+                _formKey.currentState.save();
+
+                Provider.of<AppDatabase>(context, listen: false)
+                    .insertItem(model);
+
+                Navigator.pop(context);
+              },
             )
           ],
         ),

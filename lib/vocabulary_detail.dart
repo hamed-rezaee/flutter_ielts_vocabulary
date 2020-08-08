@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ielts_vocabulary/vocabulary_model.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_ielts_vocabulary/words.dart';
 
 class VocabularyDetail extends StatelessWidget {
   const VocabularyDetail({
     @required this.model,
-    Key key,
-  }) : super(key: key);
-  final VocabularyModel model;
+  });
+
+  final Word model;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -16,7 +18,12 @@ class VocabularyDetail extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<AppDatabase>(context, listen: false)
+                    .deleteItem(model);
+
+                Navigator.pop(context);
+              },
             ),
             IconButton(
               icon: const Icon(Icons.check_box),
