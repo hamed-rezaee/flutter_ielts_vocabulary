@@ -52,19 +52,21 @@ class _HomePageState extends State<HomePage> {
                             snapshot.data[index].checked
                                 ? Icons.assignment_turned_in
                                 : Icons.assignment_late,
+                            color: Colors.white,
                           ),
+                          backgroundColor: Theme.of(context).accentColor,
                         ),
                         title: Text(
                           snapshot.data[index].word,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         subtitle: Text(
                           snapshot.data[index].synonyms,
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.normal,
                           ),
                         ),

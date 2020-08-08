@@ -87,9 +87,10 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                     Text(
                       _model.word,
                       style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
                     ),
                     IconButton(
                       icon: Icon(
@@ -128,7 +129,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                   child: Text(
                     _model.definitions,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 16,
                       color: Colors.black87,
                     ),
                   ),
@@ -148,7 +149,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                   child: Text(
                     _model.synonyms,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 16,
                       color: Colors.black87,
                     ),
                   ),
