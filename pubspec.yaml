@@ -14,6 +14,7 @@ dependencies:
   moor_flutter: ^3.1.0
   provider: ^4.3.2
   flutter_tts: ^1.2.6
+  file_picker: ^1.13.2
 
   cupertino_icons: ^0.1.3
 

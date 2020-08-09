@@ -102,58 +102,48 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                       onPressed: isPlaying
                           ? null
                           : () async {
-                              final int result =
-                                  await flutterTts.speak(_model.word);
+                              await flutterTts.speak(_model.word);
 
-                              if (result == 1) {
-                                setState(() => isPlaying = true);
-                              }
+                              setState(() => isPlaying = true);
                             },
                     )
                   ],
                 ),
                 const SizedBox(height: 4),
                 const Divider(),
-                const SizedBox(height: 8),
-                const Text(
-                  'Definitions',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    _model.definitions,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
+                InkWell(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text(
+                          'Synonyms',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            _model.synonyms,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
+                  onTap: () async {
+                    await flutterTts.speak(_model.synonyms);
+                  },
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Synonyms',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    _model.synonyms,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
-                    ),
-                  ),
-                )
               ],
             ),
           ),
@@ -166,7 +156,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
     });
 
     await flutterTts.setLanguage('en-US');
-    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setSpeechRate(0.7);
     await flutterTts.setPitch(0.9);
   }
 }

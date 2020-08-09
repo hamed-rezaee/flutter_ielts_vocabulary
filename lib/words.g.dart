@@ -10,15 +10,9 @@ part of 'words.dart';
 class Word extends DataClass implements Insertable<Word> {
   final int id;
   final String word;
-  final String definitions;
   final String synonyms;
   final bool checked;
-  Word(
-      {this.id,
-      this.word,
-      this.definitions,
-      this.synonyms,
-      @required this.checked});
+  Word({this.id, this.word, this.synonyms, @required this.checked});
   factory Word.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -28,8 +22,6 @@ class Word extends DataClass implements Insertable<Word> {
     return Word(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       word: stringType.mapFromDatabaseResponse(data['${effectivePrefix}word']),
-      definitions: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}definitions']),
       synonyms: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}synonyms']),
       checked:
@@ -45,9 +37,6 @@ class Word extends DataClass implements Insertable<Word> {
     if (!nullToAbsent || word != null) {
       map['word'] = Variable<String>(word);
     }
-    if (!nullToAbsent || definitions != null) {
-      map['definitions'] = Variable<String>(definitions);
-    }
     if (!nullToAbsent || synonyms != null) {
       map['synonyms'] = Variable<String>(synonyms);
     }
@@ -61,9 +50,6 @@ class Word extends DataClass implements Insertable<Word> {
     return WordsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       word: word == null && nullToAbsent ? const Value.absent() : Value(word),
-      definitions: definitions == null && nullToAbsent
-          ? const Value.absent()
-          : Value(definitions),
       synonyms: synonyms == null && nullToAbsent
           ? const Value.absent()
           : Value(synonyms),
@@ -79,7 +65,6 @@ class Word extends DataClass implements Insertable<Word> {
     return Word(
       id: serializer.fromJson<int>(json['id']),
       word: serializer.fromJson<String>(json['word']),
-      definitions: serializer.fromJson<String>(json['definitions']),
       synonyms: serializer.fromJson<String>(json['synonyms']),
       checked: serializer.fromJson<bool>(json['checked']),
     );
@@ -90,22 +75,14 @@ class Word extends DataClass implements Insertable<Word> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'word': serializer.toJson<String>(word),
-      'definitions': serializer.toJson<String>(definitions),
       'synonyms': serializer.toJson<String>(synonyms),
       'checked': serializer.toJson<bool>(checked),
     };
   }
 
-  Word copyWith(
-          {int id,
-          String word,
-          String definitions,
-          String synonyms,
-          bool checked}) =>
-      Word(
+  Word copyWith({int id, String word, String synonyms, bool checked}) => Word(
         id: id ?? this.id,
         word: word ?? this.word,
-        definitions: definitions ?? this.definitions,
         synonyms: synonyms ?? this.synonyms,
         checked: checked ?? this.checked,
       );
@@ -114,7 +91,6 @@ class Word extends DataClass implements Insertable<Word> {
     return (StringBuffer('Word(')
           ..write('id: $id, ')
           ..write('word: $word, ')
-          ..write('definitions: $definitions, ')
           ..write('synonyms: $synonyms, ')
           ..write('checked: $checked')
           ..write(')'))
@@ -122,19 +98,14 @@ class Word extends DataClass implements Insertable<Word> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          word.hashCode,
-          $mrjc(definitions.hashCode,
-              $mrjc(synonyms.hashCode, checked.hashCode)))));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(word.hashCode, $mrjc(synonyms.hashCode, checked.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Word &&
           other.id == this.id &&
           other.word == this.word &&
-          other.definitions == this.definitions &&
           other.synonyms == this.synonyms &&
           other.checked == this.checked);
 }
@@ -142,34 +113,29 @@ class Word extends DataClass implements Insertable<Word> {
 class WordsCompanion extends UpdateCompanion<Word> {
   final Value<int> id;
   final Value<String> word;
-  final Value<String> definitions;
   final Value<String> synonyms;
   final Value<bool> checked;
   const WordsCompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
-    this.definitions = const Value.absent(),
     this.synonyms = const Value.absent(),
     this.checked = const Value.absent(),
   });
   WordsCompanion.insert({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
-    this.definitions = const Value.absent(),
     this.synonyms = const Value.absent(),
     this.checked = const Value.absent(),
   });
   static Insertable<Word> custom({
     Expression<int> id,
     Expression<String> word,
-    Expression<String> definitions,
     Expression<String> synonyms,
     Expression<bool> checked,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (word != null) 'word': word,
-      if (definitions != null) 'definitions': definitions,
       if (synonyms != null) 'synonyms': synonyms,
       if (checked != null) 'checked': checked,
     });
@@ -178,13 +144,11 @@ class WordsCompanion extends UpdateCompanion<Word> {
   WordsCompanion copyWith(
       {Value<int> id,
       Value<String> word,
-      Value<String> definitions,
       Value<String> synonyms,
       Value<bool> checked}) {
     return WordsCompanion(
       id: id ?? this.id,
       word: word ?? this.word,
-      definitions: definitions ?? this.definitions,
       synonyms: synonyms ?? this.synonyms,
       checked: checked ?? this.checked,
     );
@@ -198,9 +162,6 @@ class WordsCompanion extends UpdateCompanion<Word> {
     }
     if (word.present) {
       map['word'] = Variable<String>(word.value);
-    }
-    if (definitions.present) {
-      map['definitions'] = Variable<String>(definitions.value);
     }
     if (synonyms.present) {
       map['synonyms'] = Variable<String>(synonyms.value);
@@ -216,7 +177,6 @@ class WordsCompanion extends UpdateCompanion<Word> {
     return (StringBuffer('WordsCompanion(')
           ..write('id: $id, ')
           ..write('word: $word, ')
-          ..write('definitions: $definitions, ')
           ..write('synonyms: $synonyms, ')
           ..write('checked: $checked')
           ..write(')'))
@@ -249,20 +209,6 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
     );
   }
 
-  final VerificationMeta _definitionsMeta =
-      const VerificationMeta('definitions');
-  GeneratedTextColumn _definitions;
-  @override
-  GeneratedTextColumn get definitions =>
-      _definitions ??= _constructDefinitions();
-  GeneratedTextColumn _constructDefinitions() {
-    return GeneratedTextColumn(
-      'definitions',
-      $tableName,
-      true,
-    );
-  }
-
   final VerificationMeta _synonymsMeta = const VerificationMeta('synonyms');
   GeneratedTextColumn _synonyms;
   @override
@@ -285,8 +231,7 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
   }
 
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, word, definitions, synonyms, checked];
+  List<GeneratedColumn> get $columns => [id, word, synonyms, checked];
   @override
   $WordsTable get asDslTable => this;
   @override
@@ -304,12 +249,6 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
     if (data.containsKey('word')) {
       context.handle(
           _wordMeta, word.isAcceptableOrUnknown(data['word'], _wordMeta));
-    }
-    if (data.containsKey('definitions')) {
-      context.handle(
-          _definitionsMeta,
-          definitions.isAcceptableOrUnknown(
-              data['definitions'], _definitionsMeta));
     }
     if (data.containsKey('synonyms')) {
       context.handle(_synonymsMeta,

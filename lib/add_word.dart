@@ -57,23 +57,6 @@ class _AddNewWordState extends State<AddNewWord> {
                   child: TextFormField(
                     style: const TextStyle(fontSize: 14),
                     decoration: InputDecoration(
-                      hintText: 'Definitions',
-                      contentPadding: const EdgeInsets.all(8),
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                    maxLines: 5,
-                    keyboardType: TextInputType.multiline,
-                    onSaved: (String value) =>
-                        model = model.copyWith(definitions: value),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                    style: const TextStyle(fontSize: 14),
-                    decoration: InputDecoration(
                       hintText: 'Synonyms',
                       contentPadding: const EdgeInsets.all(8),
                       border: InputBorder.none,

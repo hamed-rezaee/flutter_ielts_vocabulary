@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,17 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           title: const Text('IELTS Vocabulary'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.add_to_home_screen),
+              onPressed: () async {
+                final File file = await FilePicker.getFile();
+                final String content = await file.readAsString();
+
+                importFromFile(content);
+              },
+            )
+          ],
         ),
         body: _buildVocabularyList(),
         floatingActionButton: FloatingActionButton(
@@ -84,4 +97,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )),
       );
+
+  void importFromFile(String content) {}
 }
