@@ -81,35 +81,37 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      _model.word,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        _model.word,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.volume_up,
-                        color: isPlaying
-                            ? Theme.of(context).primaryColor.withOpacity(0.3)
-                            : Theme.of(context).primaryColor,
-                      ),
-                      onPressed: isPlaying
-                          ? null
-                          : () async {
-                              await flutterTts.speak(_model.word);
+                      IconButton(
+                        icon: Icon(
+                          Icons.volume_up,
+                          color: isPlaying
+                              ? Theme.of(context).primaryColor.withOpacity(0.3)
+                              : Theme.of(context).primaryColor,
+                        ),
+                        onPressed: isPlaying
+                            ? null
+                            : () async {
+                                await flutterTts.speak(_model.word);
 
-                              setState(() => isPlaying = true);
-                            },
-                    )
-                  ],
+                                setState(() => isPlaying = true);
+                              },
+                      )
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 4),
                 const Divider(),
                 InkWell(
                   child: Container(
@@ -126,7 +128,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                             color: Colors.black54,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(

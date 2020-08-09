@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
                 final File file = await FilePicker.getFile();
                 final String content = await file.readAsString();
 
-                importFromFile(content);
+                await importFromFile(content);
               },
             )
           ],
@@ -98,5 +99,16 @@ class _HomePageState extends State<HomePage> {
                 )),
       );
 
-  void importFromFile(String content) {}
+  Future<void> importFromFile(String content) async {
+    final List<dynamic> items = jsonDecode(content);
+    final AppDatabase databas =
+        Provider.of<AppDatabase>(context, listen: false);
+
+    for (final dynamic item in items) {
+      final Word word =
+          Word(word: item['word'], synonyms: item['synonyms'], checked: false);
+
+      await databas.insertItem(word);
+    }
+  }
 }
