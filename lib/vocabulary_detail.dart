@@ -62,6 +62,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           title: const Text('Definitions'),
           actions: <Widget>[
             IconButton(
+              tooltip: 'Delete',
               icon: const Icon(Icons.delete),
               onPressed: () async {
                 final bool result = await showAlertDialog(context);
@@ -75,6 +76,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
               },
             ),
             IconButton(
+              tooltip: 'Mark as Learned',
               icon: Icon(
                 _model.checked
                     ? Icons.check_box

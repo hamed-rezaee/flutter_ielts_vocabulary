@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_ielts_vocabulary/_add_word.dart';
+import 'package:flutter_ielts_vocabulary/add_word.dart';
 import 'package:flutter_ielts_vocabulary/vocabulary_detail.dart';
 import 'package:flutter_ielts_vocabulary/words.dart';
 
@@ -19,6 +19,20 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           title: const Text('IELTS Vocabulary'),
+          actions: [
+            IconButton(
+              tooltip: 'Add New Word',
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push<AddNewWord>(
+                  context,
+                  MaterialPageRoute<AddNewWord>(
+                    builder: (BuildContext context) => AddNewWord(),
+                  ),
+                );
+              },
+            )
+          ],
         ),
         body: _buildVocabularyList(),
         floatingActionButton: FloatingActionButton(
