@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         child: MaterialApp(
           title: 'IELTS Vocabulary',
           theme: ThemeData(
-            primarySwatch: Colors.blueGrey,
+            primarySwatch: Colors.indigo,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: HomePage(),

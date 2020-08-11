@@ -21,13 +21,36 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
 
   FlutterTts flutterTts = FlutterTts();
 
-  bool isPlaying = false;
+  List<String> _definitions = <String>[];
+  List<String> _synonyms = <String>[];
+  List<String> _opposites = <String>[];
 
   @override
   void initState() {
     super.initState();
 
     _model = widget.model;
+
+    if (_model.definitions.isNotEmpty) {
+      _definitions = _model.definitions
+          .split(',')
+          .map<String>((String item) => item.trim())
+          .toList();
+    }
+
+    if (_model.synonyms.isNotEmpty) {
+      _synonyms = _model.synonyms
+          .split(',')
+          .map<String>((String item) => item.trim())
+          .toList();
+    }
+
+    if (_model.opposites.isNotEmpty) {
+      _opposites = _model.opposites
+          .split(',')
+          .map<String>((String item) => item.trim())
+          .toList();
+    }
 
     setupTTS();
   }
@@ -72,79 +95,36 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           shape: Border(
             right: BorderSide(
               color: Theme.of(context).accentColor.withOpacity(0.7),
-              width: 5,
+              width: 2,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        _model.word,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.volume_up,
-                          color: isPlaying
-                              ? Theme.of(context).primaryColor.withOpacity(0.3)
-                              : Theme.of(context).primaryColor,
-                        ),
-                        onPressed: isPlaying
-                            ? null
-                            : () async {
-                                await flutterTts.speak(_model.word);
-
-                                setState(() => isPlaying = true);
-                              },
-                      )
-                    ],
-                  ),
-                ),
+                _buildMianWord(),
                 const Divider(),
-                InkWell(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                Expanded(
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification:
+                        (OverscrollIndicatorNotification overscroll) {
+                      overscroll.disallowGlow();
+                      return false;
+                    },
+                    child: ListView(
                       children: <Widget>[
-                        const Text(
-                          'Synonyms',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black54,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Container(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Text(
-                            _model.synonyms,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        )
+                        if (_definitions.isNotEmpty)
+                          _buildWordList('Definitions', _definitions),
+                        if (_definitions.isNotEmpty) const Divider(),
+                        if (_synonyms.isNotEmpty)
+                          _buildWordList('Synonyms', _synonyms),
+                        if (_synonyms.isNotEmpty) const Divider(),
+                        if (_opposites.isNotEmpty)
+                          _buildWordList('Opposites', _opposites),
+                        if (_opposites.isNotEmpty) const Divider(),
                       ],
                     ),
                   ),
-                  onTap: () async {
-                    await flutterTts.speak(_model.synonyms);
-                  },
                 ),
               ],
             ),
@@ -152,10 +132,77 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
         ),
       );
 
+  Widget _buildMianWord() => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              _model.word,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            _buildSpeakButton(context, _model.word)
+          ],
+        ),
+      );
+
+  Widget _buildWordList(String title, List<String> words) => Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.black54,
+              ),
+            ),
+            const SizedBox(height: 8),
+            NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+                return false;
+              },
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: words.length,
+                itemBuilder: (BuildContext context, int index) => ListTile(
+                  dense: true,
+                  title: Text(
+                    words[index],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  trailing: _buildSpeakButton(context, words[index]),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildSpeakButton(BuildContext context, String text) => IconButton(
+        icon: Icon(
+          Icons.volume_up,
+          color: Theme.of(context).primaryColor,
+        ),
+        onPressed: () => flutterTts.speak(text),
+      );
+
   Future<void> setupTTS() async {
-    flutterTts.setCompletionHandler(() {
-      setState(() => isPlaying = false);
-    });
+    // flutterTts.setCompletionHandler(() {
+    // });
 
     await flutterTts.setLanguage('en-US');
     await flutterTts.setSpeechRate(0.7);

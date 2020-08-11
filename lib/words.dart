@@ -5,9 +5,11 @@ part 'words.g.dart';
 class Words extends Table {
   IntColumn get id => integer().nullable().autoIncrement()();
   TextColumn get word => text().nullable()();
+  TextColumn get definitions => text().nullable()();
   TextColumn get synonyms => text().nullable()();
+  TextColumn get opposites => text().nullable()();
   BoolColumn get checked =>
-      boolean().withDefault(const Constant<bool>(false))();
+      boolean().nullable().withDefault(const Constant<bool>(false))();
 }
 
 @UseMoor(tables: <Type>[Words])

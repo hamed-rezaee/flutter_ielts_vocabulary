@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_ielts_vocabulary/add_word.dart';
+import 'package:flutter_ielts_vocabulary/_add_word.dart';
 import 'package:flutter_ielts_vocabulary/vocabulary_detail.dart';
 import 'package:flutter_ielts_vocabulary/words.dart';
 
@@ -19,28 +19,17 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           title: const Text('IELTS Vocabulary'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add_to_home_screen),
-              onPressed: () async {
-                final File file = await FilePicker.getFile();
-                final String content = await file.readAsString();
-
-                await importFromFile(content);
-              },
-            )
-          ],
         ),
         body: _buildVocabularyList(),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          tooltip: 'Add New Word',
-          onPressed: () => Navigator.push<VocabularyDetail>(
-            context,
-            MaterialPageRoute<VocabularyDetail>(
-              builder: (BuildContext context) => AddNewWord(),
-            ),
-          ),
+          child: const Icon(Icons.cloud_download),
+          tooltip: 'Import',
+          onPressed: () async {
+            final File file = await FilePicker.getFile();
+            final String content = await file.readAsString();
+
+            await importFromFile(content);
+          },
         ),
       );
 
@@ -64,8 +53,8 @@ class _HomePageState extends State<HomePage> {
                           maxRadius: 18,
                           child: Icon(
                             snapshot.data[index].checked
-                                ? Icons.assignment_turned_in
-                                : Icons.assignment_late,
+                                ? Icons.brightness_high
+                                : Icons.brightness_low,
                             color: Colors.white,
                           ),
                           backgroundColor: Theme.of(context).accentColor,
@@ -74,13 +63,15 @@ class _HomePageState extends State<HomePage> {
                           snapshot.data[index].word,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         subtitle: Text(
-                          snapshot.data[index].synonyms,
+                          snapshot.data[index].synonyms == ''
+                              ? snapshot.data[index].definitions
+                              : snapshot.data[index].synonyms,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -105,8 +96,13 @@ class _HomePageState extends State<HomePage> {
         Provider.of<AppDatabase>(context, listen: false);
 
     for (final dynamic item in items) {
-      final Word word =
-          Word(word: item['word'], synonyms: item['synonyms'], checked: false);
+      final Word word = Word(
+        word: item['word'] ?? '',
+        definitions: item['definitions'] ?? '',
+        synonyms: item['synonyms'] ?? '',
+        opposites: item['opposites'] ?? '',
+        checked: false,
+      );
 
       await databas.insertItem(word);
     }
