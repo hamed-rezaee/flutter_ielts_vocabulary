@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_ielts_vocabulary/add_word.dart';
 import 'package:flutter_ielts_vocabulary/vocabulary_detail.dart';
 import 'package:flutter_ielts_vocabulary/words.dart';
@@ -19,7 +19,18 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           elevation: 0,
           title: const Text('IELTS Vocabulary'),
-          actions: [
+          actions: <Widget>[
+            IconButton(
+              tooltip: 'Export',
+              icon: const Icon(Icons.cloud_upload),
+              onPressed: () async {
+                final AppDatabase databas =
+                    Provider.of<AppDatabase>(context, listen: false);
+                final List<Word> words = await databas.getAll();
+
+                final String result = jsonEncode(words);
+              },
+            ),
             IconButton(
               tooltip: 'Add New Word',
               icon: const Icon(Icons.add),
@@ -31,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
         body: _buildVocabularyList(),

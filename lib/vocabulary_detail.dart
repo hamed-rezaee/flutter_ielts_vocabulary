@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_ielts_vocabulary/confirm_dialog.dart';
 import 'package:flutter_ielts_vocabulary/words.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class VocabularyDetail extends StatefulWidget {
   const VocabularyDetail({
