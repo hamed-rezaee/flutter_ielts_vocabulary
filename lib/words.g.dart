@@ -13,6 +13,7 @@ class Word extends DataClass implements Insertable<Word> {
   final String definitions;
   final String synonyms;
   final String opposites;
+  final String group;
   final bool checked;
   Word(
       {this.id,
@@ -20,6 +21,7 @@ class Word extends DataClass implements Insertable<Word> {
       this.definitions,
       this.synonyms,
       this.opposites,
+      this.group,
       this.checked});
   factory Word.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -36,6 +38,8 @@ class Word extends DataClass implements Insertable<Word> {
           .mapFromDatabaseResponse(data['${effectivePrefix}synonyms']),
       opposites: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}opposites']),
+      group:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}group']),
       checked:
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}checked']),
     );
@@ -58,6 +62,9 @@ class Word extends DataClass implements Insertable<Word> {
     if (!nullToAbsent || opposites != null) {
       map['opposites'] = Variable<String>(opposites);
     }
+    if (!nullToAbsent || group != null) {
+      map['group'] = Variable<String>(group);
+    }
     if (!nullToAbsent || checked != null) {
       map['checked'] = Variable<bool>(checked);
     }
@@ -77,6 +84,8 @@ class Word extends DataClass implements Insertable<Word> {
       opposites: opposites == null && nullToAbsent
           ? const Value.absent()
           : Value(opposites),
+      group:
+          group == null && nullToAbsent ? const Value.absent() : Value(group),
       checked: checked == null && nullToAbsent
           ? const Value.absent()
           : Value(checked),
@@ -92,6 +101,7 @@ class Word extends DataClass implements Insertable<Word> {
       definitions: serializer.fromJson<String>(json['definitions']),
       synonyms: serializer.fromJson<String>(json['synonyms']),
       opposites: serializer.fromJson<String>(json['opposites']),
+      group: serializer.fromJson<String>(json['group']),
       checked: serializer.fromJson<bool>(json['checked']),
     );
   }
@@ -104,6 +114,7 @@ class Word extends DataClass implements Insertable<Word> {
       'definitions': serializer.toJson<String>(definitions),
       'synonyms': serializer.toJson<String>(synonyms),
       'opposites': serializer.toJson<String>(opposites),
+      'group': serializer.toJson<String>(group),
       'checked': serializer.toJson<bool>(checked),
     };
   }
@@ -114,6 +125,7 @@ class Word extends DataClass implements Insertable<Word> {
           String definitions,
           String synonyms,
           String opposites,
+          String group,
           bool checked}) =>
       Word(
         id: id ?? this.id,
@@ -121,6 +133,7 @@ class Word extends DataClass implements Insertable<Word> {
         definitions: definitions ?? this.definitions,
         synonyms: synonyms ?? this.synonyms,
         opposites: opposites ?? this.opposites,
+        group: group ?? this.group,
         checked: checked ?? this.checked,
       );
   @override
@@ -131,6 +144,7 @@ class Word extends DataClass implements Insertable<Word> {
           ..write('definitions: $definitions, ')
           ..write('synonyms: $synonyms, ')
           ..write('opposites: $opposites, ')
+          ..write('group: $group, ')
           ..write('checked: $checked')
           ..write(')'))
         .toString();
@@ -143,8 +157,10 @@ class Word extends DataClass implements Insertable<Word> {
           word.hashCode,
           $mrjc(
               definitions.hashCode,
-              $mrjc(synonyms.hashCode,
-                  $mrjc(opposites.hashCode, checked.hashCode))))));
+              $mrjc(
+                  synonyms.hashCode,
+                  $mrjc(opposites.hashCode,
+                      $mrjc(group.hashCode, checked.hashCode)))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -154,6 +170,7 @@ class Word extends DataClass implements Insertable<Word> {
           other.definitions == this.definitions &&
           other.synonyms == this.synonyms &&
           other.opposites == this.opposites &&
+          other.group == this.group &&
           other.checked == this.checked);
 }
 
@@ -163,6 +180,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
   final Value<String> definitions;
   final Value<String> synonyms;
   final Value<String> opposites;
+  final Value<String> group;
   final Value<bool> checked;
   const WordsCompanion({
     this.id = const Value.absent(),
@@ -170,6 +188,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
     this.definitions = const Value.absent(),
     this.synonyms = const Value.absent(),
     this.opposites = const Value.absent(),
+    this.group = const Value.absent(),
     this.checked = const Value.absent(),
   });
   WordsCompanion.insert({
@@ -178,6 +197,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
     this.definitions = const Value.absent(),
     this.synonyms = const Value.absent(),
     this.opposites = const Value.absent(),
+    this.group = const Value.absent(),
     this.checked = const Value.absent(),
   });
   static Insertable<Word> custom({
@@ -186,6 +206,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
     Expression<String> definitions,
     Expression<String> synonyms,
     Expression<String> opposites,
+    Expression<String> group,
     Expression<bool> checked,
   }) {
     return RawValuesInsertable({
@@ -194,6 +215,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
       if (definitions != null) 'definitions': definitions,
       if (synonyms != null) 'synonyms': synonyms,
       if (opposites != null) 'opposites': opposites,
+      if (group != null) 'group': group,
       if (checked != null) 'checked': checked,
     });
   }
@@ -204,6 +226,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
       Value<String> definitions,
       Value<String> synonyms,
       Value<String> opposites,
+      Value<String> group,
       Value<bool> checked}) {
     return WordsCompanion(
       id: id ?? this.id,
@@ -211,6 +234,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
       definitions: definitions ?? this.definitions,
       synonyms: synonyms ?? this.synonyms,
       opposites: opposites ?? this.opposites,
+      group: group ?? this.group,
       checked: checked ?? this.checked,
     );
   }
@@ -233,6 +257,9 @@ class WordsCompanion extends UpdateCompanion<Word> {
     if (opposites.present) {
       map['opposites'] = Variable<String>(opposites.value);
     }
+    if (group.present) {
+      map['group'] = Variable<String>(group.value);
+    }
     if (checked.present) {
       map['checked'] = Variable<bool>(checked.value);
     }
@@ -247,6 +274,7 @@ class WordsCompanion extends UpdateCompanion<Word> {
           ..write('definitions: $definitions, ')
           ..write('synonyms: $synonyms, ')
           ..write('opposites: $opposites, ')
+          ..write('group: $group, ')
           ..write('checked: $checked')
           ..write(')'))
         .toString();
@@ -316,6 +344,18 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
     );
   }
 
+  final VerificationMeta _groupMeta = const VerificationMeta('group');
+  GeneratedTextColumn _group;
+  @override
+  GeneratedTextColumn get group => _group ??= _constructGroup();
+  GeneratedTextColumn _constructGroup() {
+    return GeneratedTextColumn(
+      'group',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _checkedMeta = const VerificationMeta('checked');
   GeneratedBoolColumn _checked;
   @override
@@ -327,7 +367,7 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, word, definitions, synonyms, opposites, checked];
+      [id, word, definitions, synonyms, opposites, group, checked];
   @override
   $WordsTable get asDslTable => this;
   @override
@@ -359,6 +399,10 @@ class $WordsTable extends Words with TableInfo<$WordsTable, Word> {
     if (data.containsKey('opposites')) {
       context.handle(_oppositesMeta,
           opposites.isAcceptableOrUnknown(data['opposites'], _oppositesMeta));
+    }
+    if (data.containsKey('group')) {
+      context.handle(
+          _groupMeta, group.isAcceptableOrUnknown(data['group'], _groupMeta));
     }
     if (data.containsKey('checked')) {
       context.handle(_checkedMeta,

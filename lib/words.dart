@@ -8,6 +8,7 @@ class Words extends Table {
   TextColumn get definitions => text().nullable()();
   TextColumn get synonyms => text().nullable()();
   TextColumn get opposites => text().nullable()();
+  TextColumn get group => text().nullable()();
   BoolColumn get checked =>
       boolean().nullable().withDefault(const Constant<bool>(false))();
 }

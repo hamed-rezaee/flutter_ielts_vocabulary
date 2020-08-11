@@ -1,26 +1,135 @@
 [
   {
-    "word": "word",
-    "definitions": "definitions 01, definitions 02, definitions 03",
-    "synonyms": "synonyms 01, synonyms 02, synonyms 03",
-    "opposites": "opposites 01, opposites 02, opposites 03"
+    "word": "Indecisive (adj)",
+    "synonyms": "Indecision (n), Wavering, Irresolute",
+    "group": "Lesson One"
   },
   {
-    "word": "word",
-    "synonyms": "synonyms 01, synonyms 02, synonyms 03",
-    "opposites": "opposites 01, opposites 02, opposites 03"
+    "word": "Assertive (adj)",
+    "synonyms": "Assert (v), Forceful, Dominate, Convincing",
+    "group": "Lesson One"
   },
   {
-    "word": "word",
-    "definitions": "definitions 01, definitions 02, definitions 03",
-    "opposites": "opposites 01, opposites 02, opposites 03"
+    "word": "Well-Rounded (adj)",
+    "synonyms": "Sophisticate, Comprehensive, All-Embracing",
+    "group": "Lesson One"
   },
   {
-    "word": "word",
-    "definitions": "definitions 01, definitions 02, definitions 03",
-    "synonyms": "synonyms 01, synonyms 02, synonyms 03"
+    "word": "Gullible (adj)",
+    "synonyms": "Gullibility (n), Naive, Ingenuous",
+    "group": "Lesson One"
   },
   {
-    "word": "word"
+    "word": "Eccentric (adj)",
+    "synonyms": "Eccentricity (n), Odd, Weird, Bizarre, Queer, Peculiar",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Apprehensive (adj)",
+    "synonyms": "Apprehension (n), Uneasy, Anxious",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Fidgeting (v)",
+    "synonyms": "Play, Toy, Twist, Shuffle",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Adolescent (n, adj)",
+    "synonyms": "Adolescence (n), Teenager, Juvenile, Young",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Perceive (v)",
+    "synonyms": "Perception (n), Precipitable (adj), Perceptive (adj), Distinguishable, Noticeable",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Inseparable (adj)",
+    "synonyms": "Separation (n), Separate (v), Indivisible, Undividable",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Complex (n, adj)",
+    "synonyms": "Complexity (n), Convoluted, Complicated, Intricate, Fixation, Obsession, Preoccupation",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Bias (n)",
+    "definitions": "Prejudice in favor of or against one thing, person, or group compared with another, usually in a way considered to be unfair.",
+    "synonyms": "Unfairness, Tendency",
+    "group": "Lesson One"
+  },
+  {
+    "word": "Pioneer (n, v)",
+    "synonyms": "Innovator, Founder, Dweller",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "In Retrospect (n)",
+    "definitions": "On Reflection, Looking Back",
+    "synonyms": "Retrospective (adv)",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "The Status Quo (n)",
+    "definitions": "The Present Situation",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Bygone (adj)",
+    "synonyms": "Former, Previous",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Topical (adj)",
+    "synonyms": "Current, Contemporary",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Fleeting (adj)",
+    "synonyms": "Passing, Brief, Momentary, Short-Lived",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Glimpse (v)",
+    "definitions": "See or perceive briefly or partially",
+    "synonyms": "Peek, Peep, Sight",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Immense (adj)",
+    "synonyms": "Immensity (n), Enormous, Massive, Colossal, Bulky, Immeasurable, Tremendous",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Infinitesimal (adj)",
+    "synonyms": "Minute, Tiny, Teeny, Petty, Negligible",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Profound (adj)",
+    "synonyms": "Deep, Weightily, Expensive, Sweeping",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Remnant (n)",
+    "synonyms": "Remains, Debris, Residue",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Eternity (v)",
+    "synonyms": "Eternal (adj), Immortality, Everlasting, Constant",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Excavate (v)",
+    "synonyms": "Excavator (n), Dig, Quarry",
+    "group": "Lesson Two"
+  },
+  {
+    "word": "Loot (V)",
+    "synonyms": "Looter (n), Rob, Plunder, Ransack",
+    "group": "Lesson Two"
   }
 ]

@@ -103,7 +103,22 @@ class _AddNewWordState extends State<AddNewWord> {
                     onSaved: (String value) =>
                         model = model.copyWith(opposites: value),
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    style: const TextStyle(fontSize: 14),
+                    decoration: InputDecoration(
+                      hintText: 'Group',
+                      contentPadding: const EdgeInsets.all(8),
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    onSaved: (String value) =>
+                        model = model.copyWith(group: value),
+                  ),
+                ),
               ],
             ),
           ),
