@@ -91,45 +91,34 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
             ),
           ],
         ),
-        body: Card(
-          elevation: 2,
-          margin: const EdgeInsets.all(8),
-          shape: Border(
-            right: BorderSide(
-              color: Theme.of(context).accentColor.withOpacity(0.7),
-              width: 2,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: <Widget>[
-                _buildMianWord(),
-                const Divider(),
-                Expanded(
-                  child: NotificationListener<OverscrollIndicatorNotification>(
-                    onNotification:
-                        (OverscrollIndicatorNotification overscroll) {
-                      overscroll.disallowGlow();
-                      return false;
-                    },
-                    child: ListView(
-                      children: <Widget>[
-                        if (_definitions.isNotEmpty)
-                          _buildWordList('Definitions', _definitions),
-                        if (_definitions.isNotEmpty) const Divider(),
-                        if (_synonyms.isNotEmpty)
-                          _buildWordList('Synonyms', _synonyms),
-                        if (_synonyms.isNotEmpty) const Divider(),
-                        if (_opposites.isNotEmpty)
-                          _buildWordList('Opposites', _opposites),
-                        if (_opposites.isNotEmpty) const Divider(),
-                      ],
-                    ),
+        body: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: <Widget>[
+              _buildMianWord(),
+              const Divider(),
+              Expanded(
+                child: NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (OverscrollIndicatorNotification overscroll) {
+                    overscroll.disallowGlow();
+                    return false;
+                  },
+                  child: ListView(
+                    children: <Widget>[
+                      if (_definitions.isNotEmpty)
+                        _buildWordList('Definitions', _definitions),
+                      if (_definitions.isNotEmpty) const Divider(),
+                      if (_synonyms.isNotEmpty)
+                        _buildWordList('Synonyms', _synonyms),
+                      if (_synonyms.isNotEmpty) const Divider(),
+                      if (_opposites.isNotEmpty)
+                        _buildWordList('Opposites', _opposites),
+                      if (_opposites.isNotEmpty) const Divider(),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
@@ -199,7 +188,13 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           Icons.volume_up,
           color: Theme.of(context).primaryColor,
         ),
-        onPressed: () => flutterTts.speak(text),
+        onPressed: () => flutterTts.speak(
+          text
+              .replaceAll('(v)', '')
+              .replaceAll('(n)', '')
+              .replaceAll('(adv)', '')
+              .replaceAll('(adj)', ''),
+        ),
       );
 
   Future<void> setupTTS() async {

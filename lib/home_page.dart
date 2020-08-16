@@ -18,7 +18,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: const Text('IELTS Vocabulary'),
+          leading: const Icon(Icons.bubble_chart),
+          title: const Text(
+            'IELTS Vocabulary',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: <Widget>[
             IconButton(
               tooltip: 'Export',
@@ -33,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               tooltip: 'Add New Word',
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.library_add),
               onPressed: () {
                 Navigator.push<AddNewWord>(
                   context,
@@ -58,61 +64,65 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-  Widget _buildVocabularyList() => Container(
-        color: Colors.white,
-        child: StreamBuilder<List<Word>>(
-            stream: Provider.of<AppDatabase>(context).watchAll(),
-            builder: (BuildContext context,
-                    AsyncSnapshot<List<Word>> snapshot) =>
-                ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 92),
-                  itemCount: snapshot.data?.length ?? 0,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(height: 1),
-                  itemBuilder: (BuildContext context, int index) => Material(
-                    color: Colors.white,
-                    child: InkWell(
-                      child: ListTile(
-                        dense: true,
-                        leading: CircleAvatar(
-                          maxRadius: 18,
-                          child: Icon(
-                            snapshot.data[index].checked
-                                ? Icons.brightness_high
-                                : Icons.brightness_low,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Theme.of(context).accentColor,
-                        ),
-                        title: Text(
-                          snapshot.data[index].word,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        subtitle: Text(
-                          snapshot.data[index].synonyms == ''
-                              ? snapshot.data[index].definitions
-                              : snapshot.data[index].synonyms,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        onTap: () => Navigator.push<VocabularyDetail>(
-                          context,
-                          MaterialPageRoute<VocabularyDetail>(
-                            builder: (BuildContext context) => VocabularyDetail(
-                              model: snapshot.data[index],
-                            ),
-                          ),
-                        ),
-                      ),
+  Widget _buildVocabularyList() => StreamBuilder<List<Word>>(
+        stream: Provider.of<AppDatabase>(context).watchAll(),
+        builder: (BuildContext context, AsyncSnapshot<List<Word>> snapshot) =>
+            ListView.separated(
+          padding: const EdgeInsets.only(bottom: 92),
+          itemCount: snapshot.data?.length ?? 0,
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            indent: 16,
+            endIndent: 16,
+          ),
+          itemBuilder: (BuildContext context, int index) => Material(
+            child: InkWell(
+              child: ListTile(
+                leading: CircleAvatar(
+                  maxRadius: 18,
+                  child: InkWell(
+                    child: Icon(
+                      snapshot.data[index].checked
+                          ? Icons.brightness_high
+                          : Icons.brightness_low,
+                      color: Colors.white,
+                    ),
+                    onTap: () => _toggleChecked(snapshot.data[index]),
+                  ),
+                  backgroundColor: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  snapshot.data[index].word,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                subtitle: Text(
+                  '${snapshot.data[index].group}\n${snapshot.data[index].synonyms == '' ? snapshot.data[index].definitions : snapshot.data[index].synonyms}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  maxLines: 2,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                ),
+                onTap: () => Navigator.push<VocabularyDetail>(
+                  context,
+                  MaterialPageRoute<VocabularyDetail>(
+                    builder: (BuildContext context) => VocabularyDetail(
+                      model: snapshot.data[index],
                     ),
                   ),
-                )),
+                ),
+              ),
+            ),
+          ),
+        ),
       );
 
   Future<void> importFromFile(String content) async {
@@ -126,10 +136,16 @@ class _HomePageState extends State<HomePage> {
         definitions: item['definitions'] ?? '',
         synonyms: item['synonyms'] ?? '',
         opposites: item['opposites'] ?? '',
+        group: item['group'] ?? '',
         checked: false,
       );
 
       await databas.insertItem(word);
     }
   }
+
+  void _toggleChecked(Word data) =>
+      Provider.of<AppDatabase>(context, listen: false).updateItem(
+        data.copyWith(checked: !data.checked),
+      );
 }
